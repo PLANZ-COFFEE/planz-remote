@@ -8,8 +8,8 @@
   "private": true,
   "scripts": {
     "dev": "babel-node app.js",
-    "build": "babel app.js -d dist",
-    "start": "npm run build && node dist/app.js"
+    "build": "babel ./*.js -d dist && cp index.html dist/",
+    "start": "npm run build && pm2 start ./dist/app.js --name 'PR'"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.4",
