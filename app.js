@@ -59,6 +59,37 @@ app.get("/", (req, res) => {
 });
 
 // 터치 재보정
+app.get("/status", (req, res) => {
+  let kiosk = true;
+  let pii = true;
+
+  const kioskProcessNum = child
+    .execSync("ps -e | grep -c pkb || true", { encoding: "utf-8" })
+    .slice(0, 1);
+
+  // 키오스크가 켜져있는 경우,
+  if (kioskProcessNum !== "0") {
+    kiosk = true;
+  } else {
+    kiosk = false;
+  }
+  //pm2 status | grep PII | grep onffline -c
+  const piiProcessNum = child
+    .execSync("pm2 status | grep PII | grep online -c || true", {
+      encoding: "utf-8",
+    })
+    .slice(0, 1);
+  // 키오스크가 켜져있는 경우,
+  if (piiProcessNum !== "0") {
+    pii = true;
+  } else {
+    pii = false;
+  }
+
+  res.send({ kiosk, pii });
+});
+
+// 터치 재보정
 app.get("/touch", (req, res) => {
   res.send("success");
   child.execSync("bash ~/scripts/touchScreenCali.sh", {
