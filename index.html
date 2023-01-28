@@ -63,6 +63,10 @@
         <h1>6. 제빙기 리셋</h1>
         <button id="im-reset">실행</button>
       </div>
+      <div class="row">
+        <h1>6. 상태확인</h1>
+        <button id="status">실행</button>
+      </div>
     </div>
   </body>
   <script>
@@ -86,6 +90,9 @@
       });
       document.getElementById("im-reset").addEventListener("click", () => {
         fetch("/im-reset");
+      });
+      document.getElementById("status").addEventListener("click", () => {
+        fetch("/status");
       });
     };
   </script>
